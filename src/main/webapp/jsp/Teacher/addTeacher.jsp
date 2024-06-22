@@ -14,8 +14,8 @@
 <section class="is-title-bar">
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
         <ul>
-            <li>List of Events</li>
-            <li>Add Event</li>
+            <li>List of Teacher</li>
+            <li>Add Teacher</li>
         </ul>
     </div>
 </section>
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <h3 class="tile-title">Add Event</h3>
+
                 <div class="tile-body">
                     <form action="<%= request.getContextPath() %>/addTeacher" method="post" enctype="multipart/form-data">
 

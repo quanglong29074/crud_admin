@@ -16,8 +16,8 @@
 <section class="is-title-bar">
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
         <ul>
-            <li>List of Events</li>
-            <li>Edit Event</li>
+            <li>List of Teacher</li>
+            <li>Edit Teacher</li>
         </ul>
     </div>
 </section>
@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <h3 class="tile-title">Edit Event</h3>
+
                 <div class="tile-body">
                     <form action="<%= request.getContextPath() %>/teacher" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="edit"/>

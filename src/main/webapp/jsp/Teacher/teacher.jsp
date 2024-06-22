@@ -11,7 +11,7 @@
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
         <ul>
             <li>Admin</li>
-            <li>Tables</li>
+            <li>Teacher</li>
         </ul>
     </div>
 </section>
@@ -22,7 +22,7 @@
         <div class="col-sm-2" style="margin-right: 5px;">
             <a class="btn btn-add" href="addTeacher" title="Thêm">
                 <i class="fas fa-plus"></i>
-                Add Category
+                Add Teacher
             </a>
         </div>
     </div>
