@@ -98,8 +98,12 @@
       <ul class="menu-list">
         <li class="active">
           <a href="class">
-            <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
+            <span class="icon"><i class="mdi mdi-school"></i></span>
             <span class="menu-item-label">ClassRoom</span>
+          </a>
+          <a href="teacher">
+            <span class="icon"><i class="mdi mdi-teach"></i></span>
+            <span class="menu-item-label">Teacher</span>
           </a>
         </li>
       </ul>
