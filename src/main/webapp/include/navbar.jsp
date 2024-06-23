@@ -105,8 +105,13 @@
             <span class="icon"><i class="mdi mdi-teach"></i></span>
             <span class="menu-item-label">Teacher</span>
           </a>
+          <a href="student">
+            <span class="icon"><i class="mdi mdi-account"></i></span>
+            <span class="menu-item-label">Student</span>
+          </a>
         </li>
       </ul>
+
     </div>
   </aside>
 
