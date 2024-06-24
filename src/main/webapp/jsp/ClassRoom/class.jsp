@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 19/06/2024
-  Time: 8:50 CH
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.crud_admin.entity.ClassRoom" %>
@@ -18,9 +11,8 @@
   <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
     <ul>
       <li>Admin</li>
-      <li>Tables</li>
+      <li>Class</li>
     </ul>
-
   </div>
 </section>
 
@@ -28,9 +20,9 @@
   <div class="flex flex-col md:flex-row items-center justify-start">
     <!-- Phần này để chứa nút "Add Blog" -->
     <div class="col-sm-2" style="margin-right: 5px;">
-      <a class="btn btn-add"  href="addClass" title="Thêm">
+      <a class="btn btn-add" href="addClass" title="Thêm">
         <i class="fas fa-plus"></i>
-        Add Category
+        Add Class
       </a>
     </div>
   </div>
@@ -82,7 +74,6 @@
             <form action="class?id=<%= classRoom.getIdClass() %>" method="post" style="display:inline;">
               <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this class?');">Delete</button>
             </form>
-
           </td>
         </tr>
         <% } %>
@@ -92,17 +83,22 @@
           <td colspan="4">No data available</td>
         </tr>
         <% } %>
-
         </tbody>
       </table>
       <div class="table-pagination">
         <div class="flex items-center justify-between">
           <div class="buttons">
-            <button type="button" class="button active">1</button>
-            <button type="button" class="button">2</button>
-            <button type="button" class="button">3</button>
+            <%
+              int currentPage = (int) request.getAttribute("currentPage");
+              int totalPages = (int) request.getAttribute("totalPages");
+              for (int i = 1; i <= totalPages; i++) {
+            %>
+            <a href="<%= request.getContextPath() %>/class?page=<%= i %>" class="button <%= (i == currentPage) ? "active" : "" %>"><%= i %></a>
+            <%
+              }
+            %>
           </div>
-          <small>Page 1 of 3</small>
+          <small>Page <%= currentPage %> of <%= totalPages %></small>
         </div>
       </div>
     </div>
@@ -110,44 +106,33 @@
 </section>
 <%@ include file="/include/script.jsp"%>
 <style>
-
   .btn-primary {
     color: rgb(245 157 57);
     background-color: rgb(251 226 197);
     border: none;
-    /* border-top-left-radius: 10px !important; */
-    /* border-bottom-right-radius: 10px !important; */
     border-radius: .357rem;
-    border: none;
     font-weight: 600;
-    padding: 5px 20px; /* Điều chỉnh kích thước theo ý muốn */
+    padding: 5px 20px;
   }
 
   .edit-button {
-    margin-top: 10px; /* Điều chỉnh giá trị margin-top theo ý muốn */
+    margin-top: 10px;
   }
 
   .btn-add {
     color: white;
     background-color: black;
     border: none;
-    /* border-top-left-radius: 10px !important; */
-    /* border-bottom-right-radius: 10px !important; */
     border-radius: .357rem;
-    border: none;
     font-weight: 600;
-    padding: 10px 20px; /* Điều chỉnh kích thước theo ý muốn */
+    padding: 10px 20px;
   }
 
   .btn-danger {
     color: #FFF;
     background-color: #dc3545;
     border-color: #dc3545;
-    border: none;
-    /* border-top-left-radius: 10px !important; */
-    /* border-bottom-right-radius: 10px !important; */
     border-radius: .357rem;
-    border: none;
     font-weight: 600;
     padding: 5px 20px;
   }
@@ -159,7 +144,6 @@
   }
 
   .btn-danger:focus, .btn-danger.focus {
-    -webkit-box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5);
     box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5);
   }
 
@@ -174,7 +158,7 @@
   }
 
   .button-group > * {
-    margin-right: 10px; /* Khoảng cách giữa các nút */
+    margin-right: 10px;
   }
 </style>
 </body>

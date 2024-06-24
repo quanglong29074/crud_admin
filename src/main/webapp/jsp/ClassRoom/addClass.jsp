@@ -25,19 +25,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <h3 class="tile-title">Add Event</h3>
+
                 <div class="tile-body">
                     <form action="addClass" class="edit-event-form" method="post" >
 
 
                         <div class="form-group col-md-3">
                             <label class="control-label">Class name</label>
-                            <input  class="form-control" name="className" placeholder="Title" />
+                            <input  type="text" class="form-control" name="className" placeholder="Title" />
                         </div>
 
                         <div class="form-group col-md-3">
-                            <label class="control-label">Class name</label>
-                            <input  class="form-control" name="numberMember" placeholder="Title" />
+                            <label class="control-label">Number of students</label>
+                            <input  type="number" class="form-control" name="numberMember" placeholder="number" />
                         </div>
 
 
