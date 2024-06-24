@@ -59,30 +59,27 @@
         </tr>
         </thead>
         <tbody>
-        <%-- Lấy danh sách ClassRoom từ request attribute --%>
-        <% List<ClassRoom> classRooms = (List<ClassRoom>) request.getAttribute("classRooms"); %>
-        <%-- Kiểm tra nếu danh sách không rỗng --%>
-        <% if (classRooms != null && !classRooms.isEmpty()) { %>
-        <%-- Sử dụng vòng lặp để duyệt qua từng ClassRoom và hiển thị thông tin --%>
-        <% for (ClassRoom classRoom : classRooms) { %>
+        <%
+          List<ClassRoom> classRooms = (List<ClassRoom>) request.getAttribute("classRooms");
+          if (classRooms != null) {
+            for (ClassRoom classRoom : classRooms) {
+        %>
         <tr>
           <td><%= classRoom.getIdClass() %></td>
           <td><%= classRoom.getClassName() %></td>
           <td><%= classRoom.getNumberMember() %></td>
           <td>
-            <a class="btn btn-primary" href="editClass?id=<%= classRoom.getIdClass() %>">Edit</a>
-            <form action="class?id=<%= classRoom.getIdClass() %>" method="post" style="display:inline;">
-              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this class?');">Delete</button>
+            <a class="btn btn-primary" href="<%= request.getContextPath() %>/class?action=edit&id=<%= classRoom.getIdClass() %>">Edit</a>
+            <form action="class" method="post" style="display:inline;" onsubmit="return confirmDelete()">
+              <input type="hidden" name="id" value="<%= classRoom.getIdClass() %>">
+              <input type="hidden" name="action" value="delete">
+              <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>
         </tr>
-        <% } %>
-        <% } else { %>
-        <%-- Hiển thị thông báo nếu danh sách trống --%>
-        <tr>
-          <td colspan="4">No data available</td>
-        </tr>
-        <% } %>
+        <% }
+            }
+        %>
         </tbody>
       </table>
       <div class="table-pagination">
@@ -105,6 +102,11 @@
   </div>
 </section>
 <%@ include file="/include/script.jsp"%>
+<script>
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this teacher?");
+  }
+</script>
 <style>
   .btn-primary {
     color: rgb(245 157 57);

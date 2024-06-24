@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/class")
+
+@MultipartConfig
 public class ClassController extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
@@ -26,6 +29,20 @@ public class ClassController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
+        if (action != null && action.equals("edit")) {
+            String classRoomIdStr = req.getParameter("id");
+            if (classRoomIdStr != null && !classRoomIdStr.isEmpty()) {
+                int classRoomId = Integer.parseInt(classRoomIdStr);
+                ClassRoom classRoomToEdit = entityManager.find(ClassRoom.class, classRoomId);
+                if (classRoomToEdit != null) {
+                    req.setAttribute("classRoom", classRoomToEdit);
+                    req.getRequestDispatcher("/jsp/ClassRoom/editClass.jsp").forward(req, resp);
+                    return;
+                }
+            }
+        }
         int page = 1;
         int pageSize = 5;
         if (req.getParameter("page") != null) {
@@ -53,27 +70,43 @@ public class ClassController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String idClassStr = req.getParameter("id");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
-        if (idClassStr == null || idClassStr.trim().isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Class ID is missing or invalid.");
-            return;
-        }
+        if (action != null && action.equals("edit")) {
+            String classRoomIdStr = request.getParameter("id");
+            if (classRoomIdStr != null && !classRoomIdStr.isEmpty()) {
+                int classRoomId = Integer.parseInt(classRoomIdStr);
 
-        try {
-            int idClass = Integer.parseInt(idClassStr.trim());
+                entityManager.getTransaction().begin();
 
-            entityManager.getTransaction().begin();
-            ClassRoom classRoom = entityManager.find(ClassRoom.class, idClass);
-            if (classRoom != null) {
-                entityManager.remove(classRoom);
+                ClassRoom classRoomToEdit = entityManager.find(ClassRoom.class, classRoomId);
+                if (classRoomToEdit != null) {
+                    classRoomToEdit.setClassName(request.getParameter("className"));
+                    classRoomToEdit.setNumberMember(Integer.parseInt(request.getParameter("numberMember")));
+                    entityManager.merge(classRoomToEdit);
+                }
+
+                entityManager.getTransaction().commit();
             }
-            entityManager.getTransaction().commit();
 
-            resp.sendRedirect(req.getContextPath() + "/class");
-        } catch (NumberFormatException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Class ID is not a valid number.");
+            response.sendRedirect(request.getContextPath() + "/class");
+        } else if (action != null && action.equals("delete")) {
+            String classRoomIdStr = request.getParameter("id");
+            if (classRoomIdStr != null && !classRoomIdStr.isEmpty()) {
+                int classRoomId = Integer.parseInt(classRoomIdStr);
+
+                entityManager.getTransaction().begin();
+
+                ClassRoom classRoomToDelete = entityManager.find(ClassRoom.class, classRoomId);
+                if (classRoomToDelete != null) {
+                    entityManager.remove(classRoomToDelete);
+                }
+
+                entityManager.getTransaction().commit();
+            }
+
+            response.sendRedirect(request.getContextPath() + "/class");
         }
     }
 
