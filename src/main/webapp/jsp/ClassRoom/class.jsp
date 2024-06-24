@@ -104,7 +104,7 @@
 <%@ include file="/include/script.jsp"%>
 <script>
   function confirmDelete() {
-    return confirm("Are you sure you want to delete this teacher?");
+    return confirm("Are you sure you want to delete this class?");
   }
 </script>
 <style>
