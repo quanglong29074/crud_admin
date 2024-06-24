@@ -16,8 +16,8 @@
 <section class="is-title-bar">
     <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
         <ul>
-            <li>List of Events</li>
-            <li>Add Event</li>
+            <li>List of Class room</li>
+            <li>Add class</li>
         </ul>
     </div>
 </section>
@@ -27,25 +27,19 @@
             <div class="tile">
                 <h3 class="tile-title">Add Event</h3>
                 <div class="tile-body">
-                    <form asp-controller="Events" asp-action="AddEvent" class="edit-event-form" method="post" enctype="multipart/form-data">
+                    <form action="addClass" class="edit-event-form" method="post" >
 
 
                         <div class="form-group col-md-3">
-                            <label class="control-label">Title</label>
-                            <input asp-for="EventTitle" class="form-control" name="EventTitle" placeholder="Title" />
+                            <label class="control-label">Class name</label>
+                            <input  class="form-control" name="className" placeholder="Title" />
                         </div>
 
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Event Image</label>
-                            <input type="file" name="EventImageUrl" class="form-control" asp-for="EventImageUrl" onchange="displayThumbnail(this);" />
-                            <img id="thumbnailImage" style="display: none; max-width: 50%;" alt="Thumbnail image" />
-
+                        <div class="form-group col-md-3">
+                            <label class="control-label">Class name</label>
+                            <input  class="form-control" name="numberMember" placeholder="Title" />
                         </div>
 
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Event Description</label>
-                            <textarea class="form-control" name="EventDescription" asp-for="EventDescription"></textarea>
-                        </div>
 
                         <button style="margin-top:20px;"class="btn btn-save" type="submit">Save</button>
                         <a class="btn btn-cancel" href="/Events/Event">Cancel</a>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.crud_admin.entity.ClassRoom" %>
 <html>
 <head>
   <%@ include file="/include/head.jsp"%>
@@ -86,8 +87,8 @@
 <section class="is-title-bar">
   <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
     <ul>
-      <li>List of Events</li>
-      <li>Edit Event</li>
+      <li>List of Class Room</li>
+      <li>Edit Class Room</li>
     </ul>
   </div>
 </section>
@@ -97,30 +98,26 @@
       <div class="tile">
 
         <div class="tile-body">
-          <form class="edit-product-form" asp-controller="Events" asp-action="EditEvent" method="post" enctype="multipart/form-data">
+          <%
+            ClassRoom classRoom = (ClassRoom) request.getAttribute("classRoom");
+          %>
+          <form class="edit-product-form" action="editClass"  method="post" >
             <!-- Trường ẩn để chứa FacilitiesId -->
-            <input type="hidden" asp-for="EventsId" />
+            <input type="hidden" name="id" value="<%= classRoom.getIdClass() %>">
 
             <div class="form-group col-md-3">
-              <label class="control-label">Title</label>
-              <input asp-for="EventTitle" class="form-control" name="EventTitle" placeholder="Title" />
+              <label class="control-label">Class name </label>
+              <input type="text" class="form-control" name="className" placeholder="Class name" value="<%= classRoom.getClassName() %>">
             </div>
 
-            <div class="form-group col-md-12">
-              <label class="control-label">Thumbnail</label>
-              <div>
-                <input asp-for="EventImageUrl" type="file" name="EventImageUrl" class="form-control" onchange="displayThumbnail(this);" />
-                <img id="thumbnailImage" alt="Thumbnail image" src="@Url.Content(Model.EventImageUrl)" style="max-width: 50%;" />
-              </div>
+            <div class="form-group col-md-3">
+              <label class="control-label">Member number</label>
+              <input type="number" class="form-control" name="numberMember" placeholder="Number of members" value="<%= classRoom.getNumberMember() %>">
             </div>
 
-            <div class="form-group col-md-6">
-              <label class="control-label">Content</label>
-              <textarea asp-for="EventDescription" class="form-control" name="EventDescription" placeholder="Content"></textarea>
-            </div>
 
             <button class="btn btn-save" type="submit">Save</button>
-            <a class="btn btn-cancel" href="/Events/Event">Cancel</a>
+            <a class="btn btn-cancel" href="class">Cancel</a>
           </form>
 
         </div>
@@ -128,21 +125,7 @@
     </div>
   </div>
 </section>
-<script src="https://cdn.tiny.cloud/1/6a4ufu188x8itoqtz2agsuahgg475yn7bxva9xzabribtvjm/tinymce/5/tinymce.min.js"></script>
-<script>tinymce.init({
-  selector: 'textarea[name="EventDescription"]'
-});</script>
-<script>function displayThumbnail(input) {
-  var thumbnailImage = document.getElementById('thumbnailImage');
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      thumbnailImage.src = e.target.result;
-      thumbnailImage.style.display = 'block';
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}</script>
+
 <%@ include file="/include/script.jsp"%>
 </body>
 </html>

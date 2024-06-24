@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.crud_admin.entity.ClassRoom" %>
 <html>
 <head>
   <%@ include file="/include/head.jsp"%>
@@ -58,54 +60,38 @@
       <table>
         <thead>
         <tr>
-          <th class="checkbox-cell">
-            <label class="checkbox">
-              <input type="checkbox">
-              <span class="check"></span>
-            </label>
-          </th>
-          <th class="image-cell"></th>
-          <th>Name</th>
-          <th>Company</th>
-          <th>City</th>
-          <th>Progress</th>
-          <th>Created</th>
-          <th></th>
+          <th scope="col">Class Id</th>
+          <th scope="col">Class name</th>
+          <th scope="col">Number member</th>
+          <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
+        <%-- Lấy danh sách ClassRoom từ request attribute --%>
+        <% List<ClassRoom> classRooms = (List<ClassRoom>) request.getAttribute("classRooms"); %>
+        <%-- Kiểm tra nếu danh sách không rỗng --%>
+        <% if (classRooms != null && !classRooms.isEmpty()) { %>
+        <%-- Sử dụng vòng lặp để duyệt qua từng ClassRoom và hiển thị thông tin --%>
+        <% for (ClassRoom classRoom : classRooms) { %>
         <tr>
-          <td class="checkbox-cell">
-            <label class="checkbox">
-              <input type="checkbox">
-              <span class="check"></span>
-            </label>
-          </td>
-          <td class="image-cell">
-            <div class="image">
-              <img src="https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg" class="rounded-full">
-            </div>
-          </td>
-          <td data-label="Name">Rebecca Bauch</td>
-          <td data-label="Company">Daugherty-Daniel</td>
-          <td data-label="City">South Cory</td>
-          <td data-label="Progress" class="progress-cell">
-            <progress max="100" value="79">79</progress>
-          </td>
-          <td data-label="Created">
-            <small class="text-gray-500" title="Oct 25, 2021">Oct 25, 2021</small>
-          </td>
-          <td class="actions-cell">
-            <div class="buttons right nowrap">
-              <button class="button small blue --jb-modal"  data-target="sample-modal-2" type="button">
-                <span class="icon"><i class="mdi mdi-eye"></i></span>
-              </button>
-              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-              </button>
-            </div>
+          <td><%= classRoom.getIdClass() %></td>
+          <td><%= classRoom.getClassName() %></td>
+          <td><%= classRoom.getNumberMember() %></td>
+          <td>
+            <a class="btn btn-primary" href="editClass?id=<%= classRoom.getIdClass() %>">Edit</a>
+            <form action="class?id=<%= classRoom.getIdClass() %>" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this class?');">Delete</button>
+            </form>
+
           </td>
         </tr>
+        <% } %>
+        <% } else { %>
+        <%-- Hiển thị thông báo nếu danh sách trống --%>
+        <tr>
+          <td colspan="4">No data available</td>
+        </tr>
+        <% } %>
 
         </tbody>
       </table>
